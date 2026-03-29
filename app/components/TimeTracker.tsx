@@ -508,13 +508,21 @@ export default function TimeTracker({ userId }: { userId: string }) {
                           </td>
                           <td className="px-4 py-2.5">
                             {editingCell?.id === entry.id && editingCell.field === "narrative" ? (
-                              <input
+                              <textarea
                                 autoFocus
                                 value={entry.narrative}
                                 onChange={(e) => updateEntry(entry.id, "narrative", e.target.value)}
                                 onBlur={() => setEditingCell(null)}
-                                onKeyDown={(e) => e.key === "Enter" && setEditingCell(null)}
-                                className="w-full bg-background border border-accent/30 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-accent"
+                                onKeyDown={(e) => {
+                                  if (e.key === "Escape") setEditingCell(null);
+                                }}
+                                ref={(el) => {
+                                  if (el) {
+                                    el.style.height = "auto";
+                                    el.style.height = el.scrollHeight + "px";
+                                  }
+                                }}
+                                className="w-full bg-background border border-accent/30 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-accent resize-none overflow-hidden"
                               />
                             ) : (
                               <span

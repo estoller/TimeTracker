@@ -26,6 +26,7 @@ Each entry needs:
 DURATION RULES:
 - If the lawyer gives an explicit duration ("2 hours", "forty five minutes", ".3", "1.5"), use it exactly. Set durationEstimated to false.
 - Duration precision matters: "3" = 3.0, "point 3" or ".3" = 0.3, "1.3" = 1.3.
+- CRITICAL: When the lawyer says "point X" (e.g., "point 3", "point 4", "point 5"), this ALWAYS means 0.X, NOT the whole number. "point 3" = 0.3, "point 4" = 0.4, "point 5" = 0.5. Never interpret "point 3" as 3.0.
 - If the lawyer uses casual time references, estimate reasonably and flag it:
   - "spent the morning on" = 3.0 (durationEstimated: true)
   - "quick call" or "brief email" = 0.3 (durationEstimated: true)
@@ -160,7 +161,25 @@ export async function POST(request: Request) {
       durationEstimated: entry.durationEstimated === true,
     }));
 
-    return NextResponse.json({ entries: validated, entryDate });
+    // Sort: group by client, BD before Office, Office always last
+    const SORT_LAST = ["office", "admin"];
+    const SORT_BEFORE_LAST = ["bd", "bd gen", "bd int"];
+
+    function clientSortKey(client: string): number {
+      const lower = client.toLowerCase();
+      if (SORT_LAST.includes(lower)) return 2;
+      if (SORT_BEFORE_LAST.includes(lower)) return 1;
+      return 0;
+    }
+
+    const sorted = [...validated].sort((a, b) => {
+      const tierA = clientSortKey(a.client);
+      const tierB = clientSortKey(b.client);
+      if (tierA !== tierB) return tierA - tierB;
+      return a.client.localeCompare(b.client);
+    });
+
+    return NextResponse.json({ entries: sorted, entryDate });
   } catch (error) {
     console.error("Parse time entries error:", error);
     const message =

@@ -37,18 +37,18 @@ DURATION RULES:
 - If NO time reference at all, set duration to 0 and durationEstimated to true.
 
 KNOWN CLIENTS:
-The following is a list of known client names, abbreviations, and internal categories. Use this list to accurately identify client boundaries in the dictation. When you see any of these names appear — even mid-sentence or mid-narrative — it likely signals work for that client and should be split into its own entry.
+The following is a list of known client names, abbreviations, and internal categories. Use this list to help identify client boundaries in the dictation. When you see any of these names appear — even mid-sentence or mid-narrative — it likely signals work for that client and should be split into its own entry.
 
 {{KNOWN_CLIENTS}}
 
-If a name appears that is NOT on this list, still treat it as a client — the list is not exhaustive.
+IMPORTANT: This list is NOT exhaustive. The lawyer will frequently reference clients NOT on this list. You MUST still extract client names from context — listen for proper names, abbreviations, matter names, or any identifier the lawyer uses to signal a new client. Use the dictation cadence and structure to identify clients: the lawyer typically states a client name/identifier first, then describes the work. Never default to "Unknown" just because a name isn't on the known list. Only use "Unknown" when there is genuinely no client identifier in the dictation for that work.
 
 SPLITTING RULES:
 - Each distinct client/matter gets its own entry.
 - If the lawyer describes multiple tasks for the SAME client in one breath, keep them as one entry with semicolons in the narrative.
 - Watch for transitions: "then", "after that", "also", "I also", "later", "wrapped up with", "finished the day with" — these often signal a new entry.
 - IMPORTANT: Sometimes the lawyer will mention a work area first (e.g., "emails") and then reference who it was for. If a known client name appears inside a narrative, that work belongs to THAT client, not the previously mentioned one. Pay close attention to "for [client]", "with [client]", "on [client]", "regarding [client]" patterns.
-- "Emails" or "various emails" without a specific client should be grouped if context makes it clear, or set to "Unknown" if not.
+- "Emails" or "various emails" without a specific client should be grouped if context makes it clear. Only use "Unknown" as an absolute last resort when there is no client identifier whatsoever.
 
 NARRATIVE FORMATTING:
 - Professional, third-person tone: "I reviewed the agreement" becomes "Review of agreement"
